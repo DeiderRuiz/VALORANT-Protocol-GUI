@@ -1,0 +1,36 @@
+<table class="w-full border-2 border-azul-valorant border-separate border-spacing-0 text-left">
+    <thead class="bg-azul-valorant text-gris-valorant">
+        <tr>
+            <th scope="col" class="px-6 py-3">Código</th>
+            <th scope="col" class="px-6 py-3">Titulo</th>
+            <th scope="col" class="px-6 py-3">Creada en</th>
+            <th scope="col" class="px-6 py-3">Completar en</th>
+            <th scope="col" class="px-6 py-3">Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (mision of misiones; track mision.id) {
+            <tr [routerLink]="misionURL+mision.code" class="group capitalize cursor-pointer transition-all duration-300 hover:bg-azul-valorant hover:text-rojo-valorant">
+                <td class="border-t-2 border-azul-valorant group-hover:border-gris-valorant px-6 py-3">
+                    {{ mision.code }}
+                </td>
+                <td class="border-t-2 border-azul-valorant group-hover:border-gris-valorant px-6 py-3">
+                    {{ mision.title }}
+                </td>
+                <td class="border-t-2 border-azul-valorant group-hover:border-gris-valorant px-6 py-3">
+                    {{ mision.created_at | date:'MMM d, y, h:mm a' }}
+                </td>
+                <td class="border-t-2 border-azul-valorant group-hover:border-gris-valorant px-6 py-3">
+                    {{ mision.deadline | date:'MMM d, y, h:mm a' }}
+                </td>
+                <td class="border-t-2 border-azul-valorant group-hover:border-gris-valorant px-6 py-3">
+                    @if (mision.statement === "completed") {
+                        {{ mision.result | statusLabel }}
+                    }  @else {
+                        {{ mision.statement | statusLabel }}
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

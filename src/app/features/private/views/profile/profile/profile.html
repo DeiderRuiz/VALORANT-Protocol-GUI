@@ -1,0 +1,10 @@
+<div class="fade-in">
+    @if (perfil(); as perfil) {
+        <div class="fade-in">
+            <app-header [agente]="perfil"></app-header>
+            <app-agent-details [agent]="perfil" statsRoute="/perfil/"></app-agent-details>
+        </div>
+    }@else {
+        <app-loader></app-loader>
+    }
+</div>

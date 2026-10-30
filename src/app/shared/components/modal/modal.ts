@@ -1,0 +1,11 @@
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-modal',
+  imports: [],
+  templateUrl: './modal.html',
+  styles: ``,
+})
+export class Modal {
+  @Input() titulo: string = "";
+}

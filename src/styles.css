@@ -1,1 +1,75 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-orbitron: "Orbitron", system-ui, sans-serif;
+  --color-gris-valorant: #ECE9E4;
+  --color-azul-valorant: #141F2B;
+  --color-rojo-valorant: #FF4655;
+  --color-gris-placeholder: #364153;
+  --color-silver: #C0C0C0;
+  --color-green-success: #50C878;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fade-in 500ms ease-in;
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.fade-out {
+    animation: fade-out 500ms ease-in;
+}
+
+@keyframes dropdown-in {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.dropdown-enter {
+  animation: dropdown-in 500ms ease-out;
+}
+
+@keyframes dropdown-out {
+  from {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+
+  to {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+}
+
+.dropdown-leave {
+  animation: dropdown-out 500ms ease-in;
+}

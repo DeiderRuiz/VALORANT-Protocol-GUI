@@ -1,0 +1,30 @@
+<button 
+    class="group block p-1 border-2 border-azul-valorant transition transform ease-in-out duration-200"
+    [ngClass]="{
+        'ring-2 ring-azul-valorant': isSelected,
+        'active:ring-2 active:ring-azul-valorant cursor-pointer': !isSelected
+    }"
+    type="button"
+>
+    <div class="relative">
+        <img [src]="storageUrl + mapa.photo" [alt]="mapa.name" class="h-auto w-full object-cover">
+        <div 
+            class="absolute inset-0 transition transform ease-in-out duration-200 h-full"
+            [ngClass]="{
+                'bg-azul-valorant/70': isSelected,
+                'bg-azul-valorant/30 group-hover:bg-azul-valorant/70': !isSelected
+            }"
+        >
+            <div class="absolute top-1 right-1 text-lg text-gris-valorant">
+                @if (isSelected) {
+                    <iconify-icon icon="icon-park-solid:diamond-three"></iconify-icon>
+                }@else {
+                    <iconify-icon icon="icon-park-outline:diamond-three"></iconify-icon>
+                }
+            </div>
+            <div class="flex items-center justify-center h-full">
+                <p class="text-center font-bold font-orbitron text-white text-2xl uppercase">{{ mapa.name }}</p>
+            </div>
+        </div>
+    </div>
+</button>

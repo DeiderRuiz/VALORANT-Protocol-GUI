@@ -1,0 +1,18 @@
+<div class="fade-in">
+    @if (isLoading()) {
+        <app-loader></app-loader>
+    }@else{
+        <div class="fade-in">
+            <app-header [titulo]="'MISIÓN ' + mision()?.code"></app-header>
+            <app-mission-details-form
+                [misionDetails]="mision()"
+                [missionTypes]="missionTypes()!" 
+                [maps]="mapas()!"
+                [isUpdating]="true"
+                [backendErrors]="validationErrors()"
+                (setMissionDetails)="setMission(mision()!, $event)"
+                (cancel)="onCancel()"
+            ></app-mission-details-form>
+        </div>
+    }
+</div>

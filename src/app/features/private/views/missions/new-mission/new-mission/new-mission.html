@@ -1,0 +1,31 @@
+<div class="fade-in">
+    <app-header titulo="NUEVA MISIÓN"></app-header>
+    @if (isLoadingMissionTypes() && isLoadingMaps()) {
+        <app-loader></app-loader>
+    }@else {
+        <div class="fade-in">
+            <app-mission-details-form
+                [misionDetails]="missioDetails()"
+                [missionTypes]="missionTypes()!" 
+                [maps]="mapas()!"
+                [backendErrors]="validationErrors()"
+                (setMissionDetails)="setMission($event)"
+                (cancel)="hasDataToSave($event)"
+            ></app-mission-details-form>
+            @if (modalOpened()) {
+                <app-modal titulo="Cancelar">
+                    <div body class="text-center space-y-3">
+                        <div>
+                            <p class="text-lg font-bold">¿Deseas cancelar la creación de misión?</p>
+                            <p class="text-rojo-valorant font-bold">Se perderán los cambios realizados</p>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <app-secondary-button (click)="clearData()" tipo="button" texto="Si, Cancelar"></app-secondary-button>
+                            <app-primary-button (click)="modalOpened.set(false)" tipo="button" texto="No, Continuar"></app-primary-button>
+                        </div>
+                    </div>
+                </app-modal>
+            }
+        </div>
+    }
+</div>

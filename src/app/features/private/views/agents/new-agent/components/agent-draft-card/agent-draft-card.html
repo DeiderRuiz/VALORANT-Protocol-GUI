@@ -1,0 +1,17 @@
+<div class="flex items-center justify-start space-x-1 bg-azul-valorant w-full h-15 p-1">
+    <div class="block flex items-center justify-center text-gris-valorant whitespace-nowrap">
+        <div class="flex items-center justify-between h-13 w-13">
+            <img [src]="storageUrl + agent?.profile_photo" alt="" class="h-full w-full object-cover">
+        </div>
+    </div>
+    <div class="h-full border border-gris-valorant"></div>
+    <div class="w-full p-1 flex items-center justify-between space-x-4 text-gris-valorant h-13">
+        <div>
+            <p class="font-bold font-orbitron">{{ agent?.name }}</p>
+            <small>{{ agent?.class?.name }}</small>
+        </div>
+        <div class="flex items-center justify-center space-x-2">
+            <app-tertiary-icon-button (click)="editAgentDraft(agent!)" icono="mdi:file-edit"></app-tertiary-icon-button>
+        </div>
+    </div>
+</div>

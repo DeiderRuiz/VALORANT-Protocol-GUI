@@ -1,0 +1,21 @@
+<div class="flex items-center justify-end space-x-3">
+    @if (mision?.events?.at(0)?.type === "abort_request") {
+        <app-primary-button (click)="openModal('abort_rejected')" texto="Rechazar Solicitud"></app-primary-button>
+        <app-secondary-button (click)="openModal('abort_approved')" texto="Aprobar Solicitud" tipo="button"></app-secondary-button>
+    }
+</div>
+@if (modalOpened() && mision?.statement === "created") {
+    <app-modal [titulo]="modalTitle()">
+        <div body>
+            <form [formGroup]="abortRequestForm" (ngSubmit)="respondAbortRequest(mision!)" class="flex flex-col space-y-3">
+                <app-textarea-component [form]="abortRequestForm" controlName="details"
+                    label="Detalles" placeholder="*Explica los motivos de tu decisión" [error]="getBackendError('details')"
+                ></app-textarea-component>
+                <div class="w-full flex items-center justify-between">
+                    <app-secondary-button (click)="modalOpened.set(false)" tipo="button" texto="Cancelar"></app-secondary-button>
+                    <app-primary-button tipo="submit" [isDisabled]="abortRequestForm.invalid" [texto]="modalButton()"></app-primary-button>
+                </div>
+            </form>
+        </div>
+    </app-modal>
+}

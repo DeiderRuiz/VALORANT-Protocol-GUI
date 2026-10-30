@@ -1,0 +1,60 @@
+<div class="space-y-4 fade-in">
+    <app-header titulo="MAPAS"></app-header>
+    @if (isAdmin()) {
+        <div class="flex">
+            <app-primary-button routerLink="/mapas/nuevo-mapa" texto="Crear Nuevo Mapa" tipo="button"></app-primary-button>
+        </div>
+    }
+    <div class="space-y-2">
+        @if (isLoading()) {
+            <app-loader></app-loader>
+        } @else {
+            @for (mapa of mapas(); track mapa.name; let i = $index) {
+                <div class="space-y-6 fade-in">
+                    <div class="space-y-1 w-full">
+                        <div class="w-1/2">
+                            <div class="flex items-center justify-start space-x-2">
+                                <h3 class="font-bold text-xl">{{ mapa.name }}</h3>
+                                @if (isAdmin()) {
+                                    <app-primary-icon-button (click)="openEditModal(mapa)" icono="mdi:file-edit"></app-primary-icon-button>
+                                }
+                            </div>
+                            <p>{{ mapa.description }}</p>
+                        </div>
+                        <img [src]="storageUrl + mapa.photo" [alt]="mapa.name" class="w-full h-auto">
+                    </div>
+                    @if ((mapas()?.length ?? 0) <= 0) {
+                        <hr class="border border-azul-valorant">
+                    }
+                </div>
+                @if (modalOpened() === mapa.name) {
+                    <app-modal [titulo]="'Editar '+ mapa.name">
+                        <div body>
+                            <form [formGroup]="updateMapForm" (submit)="updateMap(mapa)" class="flex flex-col space-y-3">
+                                <app-input-component 
+                                    [form]="updateMapForm" controlName="name" 
+                                    label="Nombre" placeholder="Nombre del mapa" 
+                                    [error]="getvalidationError('name')"
+                                ></app-input-component>
+                                <app-textarea-component 
+                                    [form]="updateMapForm" controlName="description" 
+                                    label="Descripción" placeholder="Descripción del mapa"
+                                    [error]="getvalidationError('description')"
+                                ></app-textarea-component>
+                                <app-input-image-component 
+                                    [form]="updateMapForm" controlName="photo" 
+                                    label="foto del mapa" [currentImage]="currentImage()"
+                                    [error]="getvalidationError('photo')"
+                                ></app-input-image-component>
+                                <div class="flex items-center justify-between">
+                                    <app-secondary-button (click)="modalOpened.set(null)" texto="Cancelar"></app-secondary-button>
+                                    <app-primary-button tipo="submit" texto="Actualizar" [isDisabled]="updateMapForm.invalid"></app-primary-button>
+                                </div>
+                            </form>
+                        </div>
+                    </app-modal>
+                }
+            }
+        }
+    </div>
+</div>

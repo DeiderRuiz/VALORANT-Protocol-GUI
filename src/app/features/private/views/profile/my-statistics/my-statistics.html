@@ -1,0 +1,10 @@
+<div class="fade-in">
+    @if (isLoading()) {
+        <app-loader></app-loader>    
+    }@else {
+        <div class="fade-in">
+            <app-header [agente]="perfil()"></app-header>
+            <app-agent-stats [statistics]="statistics()"></app-agent-stats>
+        </div>
+    }
+</div>

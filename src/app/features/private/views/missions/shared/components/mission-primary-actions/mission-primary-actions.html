@@ -1,0 +1,75 @@
+@if (isLeader) {
+    <div class="flex items-center justify-end space-x-3">
+        @if (mision?.events?.at(0)?.type !== "abort_request" && mision?.statement === "created") {
+            <app-primary-button (click)="startMissionRequest(mision!)" texto="Solicitar inicio de misión" tipo="button"></app-primary-button>
+            @if (mision?.events?.at(0)?.type === "mission_created") {
+                <app-secondary-button (click)="abortRequestModalOpened.set(true)" texto="Solicitar aborto de misión" tipo="button"></app-secondary-button>
+            }
+        }
+        @if (mision?.statement === "in_progress") {
+            <app-primary-button (click)="reportModalOpened.set(true)" texto="Redactar Informe de Misión" tipo="button"></app-primary-button>
+            <app-secondary-button (click)="abortModalOpened.set(true)" texto="Abortar misión" tipo="button"></app-secondary-button>
+        }
+    </div>
+    @if (reportModalOpened() && mision?.statement === "in_progress") {
+        <div class="w-screen h-screen p-6 sm:p-12 overflow-y-auto overflow-x-hidden fixed top-0 right-0 bottom-0 left-0 z-50 flex justify-center items-center bg-black/50">
+            <div class="relative bg-gris-valorant w-[600px] p-5">
+                <h3 class="font-orbitron font-bold text-2xl">Reporte de misión</h3>
+                <form [formGroup]="reportForm" (ngSubmit)="sendReport(mision!)" class="flex flex-col space-y-3">
+                    <app-textarea-component [form]="reportForm" controlName="description"
+                        label="Descripción" placeholder="*Descripción" [error]="getBackendError('description')"
+                    ></app-textarea-component>
+                    <app-input-image-component [form]="reportForm" controlName="photo"
+                        label="Foto (opcional)" [error]="getBackendError('photo')"
+                    ></app-input-image-component>
+                    <div class="w-full flex items-center justify-between">
+                        <app-secondary-button (click)="reportModalOpened.set(false)" tipo="button" texto="Cancelar"></app-secondary-button>
+                        <app-primary-button tipo="submit" [isDisabled]="reportForm.invalid" texto="Enviar Reporte"></app-primary-button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+
+    @if (abortRequestModalOpened() && mision?.statement === "created") {
+        <app-modal titulo="Solicitud de Aborto">
+            <div body>
+                <form [formGroup]="abortRequestForm" (ngSubmit)="sendAbortRequest(mision!)" class="flex flex-col space-y-3">
+                    <app-textarea-component [form]="abortRequestForm" controlName="details"
+                        label="Detalles" placeholder="*Describe por qué consideras que la misión debe ser abortada" [error]="getBackendError('details')"
+                    ></app-textarea-component>
+                    <div class="w-full flex items-center justify-between">
+                        <app-secondary-button (click)="abortRequestModalOpened.set(false)" tipo="button" texto="Cancelar"></app-secondary-button>
+                        <app-primary-button tipo="submit" [isDisabled]="abortRequestForm.invalid" texto="Enviar Solicitud"></app-primary-button>
+                    </div>
+                </form>
+            </div>
+        </app-modal>
+    }
+}@else if (isAdminOrAssistant) {
+    <div class="flex items-center justify-end space-x-3">
+        @if (mision?.statement === "created" || mision?.statement === "waiting_start") {
+            @if (mision?.statement === "waiting_start") {
+                <app-primary-button (click)="startMission(mision!)" texto="Iniciar misión" tipo="button"></app-primary-button>
+            }
+            <app-primary-button [routerLink]="'/misiones/'+mision?.code+'/actualizar-mision'" texto="Editar Misión" tipo="button"></app-primary-button>
+            <app-secondary-button (click)="abortModalOpened.set(true)" texto="Abortar misión" tipo="button"></app-secondary-button>
+        }
+    </div>
+}
+
+@if (abortModalOpened()) {
+    <app-modal titulo="Abortar Misión">
+        <div body>
+            <form [formGroup]="abortRequestForm" (ngSubmit)="abortMission(mision!)" class="flex flex-col space-y-3">
+                <app-textarea-component [form]="abortRequestForm" controlName="details"
+                    label="Detalles" placeholder="*Describe por qué consideras que la misión debe ser abortada" [error]="getBackendError('details')"
+                ></app-textarea-component>
+                <div class="w-full flex items-center justify-between">
+                    <app-secondary-button (click)="abortModalOpened.set(false)" tipo="button" texto="Cancelar"></app-secondary-button>
+                    <app-primary-button tipo="submit" [isDisabled]="abortRequestForm.invalid" texto="Abortar"></app-primary-button>
+                </div>
+            </form>
+        </div>
+    </app-modal>
+}

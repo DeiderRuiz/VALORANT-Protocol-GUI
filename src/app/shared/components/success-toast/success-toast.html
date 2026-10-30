@@ -1,0 +1,13 @@
+@if (message()) {
+    <div class="fixed top-4 left-0 right-0 z-60 flex justify-center pointer-events-none">
+        <div class="flex items-center justify-between px-5 py-3 bg-green-success text-azul-valorant font-bold shadow-lg pointer-events-auto space-x-6">
+            <div class="flex items-center gap-2">
+                <iconify-icon icon="mynaui:check-diamond-solid"></iconify-icon>
+                <span>{{ message() }}</span>
+            </div>
+            <button type="button" (click)="close()" class="flex items-center text-xs text-azul-valorant hover:text-gris-valorant transition transform ease-in-out duration-300 cursor-pointer">
+                <iconify-icon icon="topcoat:cancel"></iconify-icon>
+            </button>
+        </div>
+    </div>
+}

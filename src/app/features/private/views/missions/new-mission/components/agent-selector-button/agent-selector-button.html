@@ -1,0 +1,45 @@
+<button 
+    (click)="selectAgent()"
+    [disabled]="isSelected || !isSpaceAvailable || isBlocked" 
+    class="group block p-1 border-2 border-azul-valorant transition transform ease-in-out duration-200"
+    [ngClass]="{
+    'ring-2 ring-azul-valorant': isSelected,
+    'opacity-40 grayscale': isLockedByCapacity || isBlocked,
+    'cursor-default pointer-events-none': isLockedByCapacity,
+    'cursor-not-allowed': isBlocked,
+    'active:ring-2 active:ring-azul-valorant cursor-pointer': isInteractive
+    }" 
+    type="button"
+>
+    <div 
+        [ngClass]="{
+            'bg-azul-valorant': isSelected,
+            'bg-transparent': isLockedByCapacity || isBlocked,
+            'bg-transparent transition duration-300 group-hover:bg-azul-valorant': isInteractive
+        }"
+    >
+        <img [src]="urlImage" [alt]="agentName" class="h-12 w-12 object-cover">
+    </div>
+</button>
+<!-- <button 
+    (click)="onClick()"
+    [disabled]="isSelected || !isSpaceAvailable || !isAgentAvailable" 
+    class="group block p-1 border-2 border-azul-valorant transition transform ease-in-out duration-200"
+    [ngClass]="{
+    'ring-2 ring-azul-valorant': isSelected,
+    'opacity-40 grayscale cursor-default pointer-events-none': !isSelected && !isSpaceAvailable,
+    'opacity-40 grayscale cursor-not-allowed': !isAgentAvailable,
+    'active:ring-2 active:ring-azul-valorant cursor-pointer': !isSelected && isAgentAvailable
+    }" 
+    type="button"
+>
+    <div 
+        [ngClass]="{
+            'bg-azul-valorant': isSelected,
+            'bg-transparent': !isSelected && !isSpaceAvailable || !isAgentAvailable,
+            'bg-transparent transition duration-300 group-hover:bg-azul-valorant': !isSelected && isAgentAvailable
+        }"
+    >
+        <img [src]="urlImage" [alt]="agentName" class="h-12 w-12 object-cover">
+    </div>
+</button> -->

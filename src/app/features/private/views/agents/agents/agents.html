@@ -1,0 +1,36 @@
+<div class="fade-in">
+    <app-header titulo="AGENTES"></app-header>
+    @if (isLoading()) {
+        <app-loader></app-loader>
+    } @else {
+        @if (isAdmin()) {
+            <div class="mb-4 flex">
+                <app-primary-button routerLink="/agentes/nuevo-agente" texto="Registrar Nuevo Agente" tipo="button"></app-primary-button>
+            </div>
+        }
+        <div class="grid grid-cols-4 gap-4 fade-in">
+            @for (agente of agentes(); track agente.name) {
+                <button [routerLink]="'/agentes/' + agente.slug" class="group block p-1 border-3 border-azul-valorant active:ring-2 active:ring-azul-valorant transition transform ease-in-out duration-200 cursor-pointer">
+                    <div class="bg-transparent transition duration-300 group-hover:bg-azul-valorant">
+                        <img [src]="storageUrl + agente.agent_photo" [alt]="agente.name" class="h-92 w-auto object-cover">
+                    </div>
+                    <div class="flex items-center justify-start space-x-3 bg-azul-valorant border-t border-gris-valorant">
+                        @if (agente.nationality) {
+                            <img 
+                                [src]="'https://flagcdn.com/w80/' + agente.nationality.country_code.toLowerCase() + '.png'" 
+                                [srcset]="'https://flagcdn.com/w160/' + agente.nationality.country_code.toLowerCase() + '.png 2x'" 
+                                width="80" [alt]="agente.nationality.country_name.toLowerCase()" 
+                                class="h-11 w-18 object-cover"
+                            >
+                        } @else {
+                            <img src="unknown_flag_sm.png" alt="Descnonocido" class="h-11 w-18 object-cover">
+                        }
+                        <div class="p-2">
+                            <span class="text-xl font-bold font-orbitron text-gris-valorant uppercase">{{ agente.name }}</span>
+                        </div>
+                    </div>
+                </button>
+            }
+        </div>
+    }
+</div>

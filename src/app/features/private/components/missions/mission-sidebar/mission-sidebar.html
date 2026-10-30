@@ -1,0 +1,68 @@
+<aside class="col-span-1 space-y-4">
+    <div>
+        <p class="capitalize"><span class="font-bold">Tipo de misión: </span>{{ mission?.type?.name }}</p>
+        <p class="capitalize"><span class="font-bold">Nivel de prioridad: </span>{{ mission?.priority }}</p>
+        <p class="capitalize"><span class="font-bold">Creada en: </span>{{ mission?.created_at | date:'MMM d, y, h:mm a' }}</p>
+        <p class="capitalize"><span class="font-bold">Ultima Actividad: </span>{{ mission?.events?.at(0)?.created_at | date:'MMM d, y, h:mm a' }}</p>
+        @if ( mission?.statement !== 'completada') {
+            <p class="capitalize"><span class="font-bold">Completar en: </span>{{ mission?.deadline | date:'MMM d, y, h:mm a' }}</p>
+        }@else {
+            <p class="capitalize"><span class="font-bold">Completada en: </span>{{ mission?.updated_at | date:'MMM d, y, h:mm a' }}</p>
+        }
+    </div>
+    <table class="w-full border-2 border-azul-valorant border-separate border-spacing-0 text-left">
+        <thead class="bg-azul-valorant text-gris-valorant">
+            <th scope="col" class="flex items-center justify-between px-4 py-2">
+                <span>Agentes Seleccionados</span>
+                @if (isAdminOrAssistant && !isLeader) {
+                    @if (mission?.statement === "created" || mission?.statement === "waiting_start") {
+                        <app-tertiary-icon-button [routerLink]="'/misiones/'+mission?.code+'/reasignar-agentes'" icono="mdi:file-edit"></app-tertiary-icon-button>
+                    }
+                }
+            </th>
+        </thead>
+        <tbody>
+            @for (agente of mission?.agents; track agente.id) {
+                <tr class="capitalize">
+                    <td class="border-t-2 border-azul-valorant p-1">
+                        <div class="w-full flex items-center justify-start h-12 space-x-4">
+                            <img [src]="storageUrl + agente.profile_photo" alt="" class="h-full w-auto object-cover">
+                            <div class="w-full flex items-center justify-between">
+                                <div>
+                                    @if (agente.id === mission?.leader_id) {
+                                        <div class="flex items-center justify-start space-x-1">
+                                            <h6 class="text-lg font-bold font-orbitron">{{ agente.name }}</h6>
+                                            <svg 
+                                                xmlns="http://www.w3.org/2000/svg" 
+                                                xml:space="preserve" width="19" height="20" 
+                                                viewBox="-0.5059643071566597 -0.4752806957926623 351.0319286143133 379.5305613915853"
+                                            >
+                                                <path fill="currentColor" d="M91.39 69.79a4.59 4.59 0 0 1-1-2.88V1.08A1.08 1.08 0 0 1 92.3.41l109.51 136.88a1.09 1.09 0 0 1-.85 1.76H149a4.59 4.59 0 0 1-3.6-1.74ZM186.65 92h51.95a4.58 4.58 0 0 0 3.6-1.73l16.41-20.51a4.59 4.59 0 0 0 1-2.88V1.08a1.08 1.08 0 0 0-1.91-.67l-71.9 89.87a1.08 1.08 0 0 0 .85 1.72Zm-69.12 115v-35.38a4.57 4.57 0 0 0-1-2.88l-59.88-75A4.63 4.63 0 0 0 53 92H1.08a1.08 1.08 0 0 0-.84 1.76l75 93.71a2.86 2.86 0 0 1 0 3.56l-75 93.72a1.08 1.08 0 0 0 .84 1.75H53a4.65 4.65 0 0 0 3.61-1.73l59.88-75a4.57 4.57 0 0 0 1.04-2.77Zm157.26-15.91a2.86 2.86 0 0 1 0-3.56l75-93.71a1.08 1.08 0 0 0-.84-1.76H297a4.63 4.63 0 0 0-3.61 1.74l-59.88 74.94a4.57 4.57 0 0 0-1 2.88v35.35a4.55 4.55 0 0 0 1 2.88l59.88 75a4.65 4.65 0 0 0 3.61 1.73h51.95a1.08 1.08 0 0 0 .84-1.75Zm-16.18 117.68-54-67.52a4.58 4.58 0 0 0-3.6-1.73h-51.8a5 5 0 0 0-3.89 1.86l-53.93 67.39a4.6 4.6 0 0 0-1 2.89v65.82a1.08 1.08 0 0 0 1.92.67L173.18 277a2.31 2.31 0 0 1 3.61 0l80.91 101.15a1.08 1.08 0 0 0 1.92-.67v-65.82a4.6 4.6 0 0 0-1.01-2.89Z" style="stroke:none;stroke-width:1;stroke-dasharray:none;stroke-linecap:butt;stroke-dashoffset:0;stroke-linejoin:miter;stroke-miterlimit:4;fill-rule:nonzero;opacity:1" vector-effect="non-scaling-stroke"/>
+                                            </svg>
+                                        </div>
+                                    }@else {
+                                        <h6 class="text-lg font-bold font-orbitron">{{ agente.name }}</h6>
+                                    }
+                                    <p class="font-bold">{{ agente.class.name }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        <div class="px-4 py-2 bg-azul-valorant border-b border-gris-valorant text-gris-valorant text-lg font-bold">
+            Mapa
+        </div>
+        <div class="relative">
+            <img [src]="storageUrl + mission?.map?.photo" alt="" class="h-auto w-full object-cover">
+            <div class="absolute inset-0 bg-azul-valorant/50 h-full">
+                <div class="flex items-center justify-center h-full">
+                    <p class="text-center font-bold font-orbitron text-white text-2xl uppercase">{{ mission?.map?.name }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>

@@ -1,0 +1,55 @@
+<form [formGroup]="searchMissionForm" (ngSubmit)="onSearchMission()">
+    <div class="flex items-center justify-start space-x-6">
+        <app-primary-button routerLink="/misiones/nueva-mision" tipo="button" texto="Nueva Misión"></app-primary-button>
+        <div class="w-full flex items-center justify-start space-x-3">
+            <app-input-component class="w-full" [form]="searchMissionForm" controlName="term"
+                label="El nombre" placeholder="Buscar"
+            ></app-input-component>
+            <div #filtersContainer class="relative">
+                <app-primary-button (click)="isFiltersOpen.set(!isFiltersOpen())" tipo="button" texto="Filtros">
+                    <iconify-icon icono icon="mdi:filter"></iconify-icon>
+                </app-primary-button>
+                @if (isFiltersOpen() === true) {
+                    <div class="space-y-3 absolute right-0 p-4 z-10 mt-2 min-w-[500px] origin-top-right bg-white shadow-lg/30 focus:outline-none overflow-hidden">
+                        <div class="flex flex-col">
+                            <h6 class="font-orbitron font-bold">Tipos de misión</h6>
+                            <div class="flex items-center justify-start space-x-3">
+                                @for (missionType of missionTypes; track missionType.name) {
+                                    <app-input-check (click)="checkMissionTypes(missionType!.id)" class="text-sm" [checked]="isSelected(missionType!.id)" [label]="missionType.name"></app-input-check>
+                                }
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <h6 class="font-orbitron font-bold">Niveles de prioridad</h6>
+                            <div class="flex items-center justify-start space-x-3">
+                                @for (priority of priorities(); track priority) {
+                                    <app-input-check (click)="checkPriorities(priority)" class="text-sm" [checked]="isSelected(priority)" [label]="priority"></app-input-check>
+                                }
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <h6 class="font-orbitron font-bold">Estados de misión</h6>
+                            <div class="flex flex-wrap items-center justify-start space-x-3">
+                                @for (statement of statements(); track statement) {
+                                    <app-input-check (click)="checkStatements(statement)" class="text-sm" [checked]="isSelected(statement)" [label]="statement | statusLabel"></app-input-check>
+                                }
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <h6 class="font-orbitron font-bold">Resultados de misión</h6>
+                            <div class="flex items-center justify-start space-x-3">
+                                @for (result of results(); track result) {
+                                    <app-input-check (click)="checkResults(result)" class="text-sm" [checked]="isSelected(result)" [label]="result | statusLabel"></app-input-check>
+                                }
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <app-secondary-button (click)="clearFilters()" class="text-sm" texto="Limpiar Filtros"></app-secondary-button>
+                            <app-primary-button class="text-sm" tipo="submit" texto="Aplicar Filtros"></app-primary-button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</form>

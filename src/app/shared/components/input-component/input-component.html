@@ -1,0 +1,15 @@
+<div [formGroup]="form">
+    <input [formControlName]="controlName" [type]="tipo" [placeholder]="placeholder" class="appearance-none bg-transparent placeholder-gris-placeholder block flex items-center justify-start p-1 border-b-2 border-azul-valorant transition transform ease-in-out duration-300 focus:border-b-4 focus:outline-none w-full h-9">
+    @if (form.get(controlName)?.touched && form.get(controlName)?.errors?.['required'] && error === null) {
+        <div class="flex items-center justify-start text-rojo-valorant text-sm font-bold space-x-1">
+            <iconify-icon icon="ph:warning-diamond-fill"></iconify-icon>
+            <span>El campo {{ label }} es obligatorio</span>
+        </div>
+    }
+    @if (error !== null) {
+        <div class="flex items-center justify-start text-rojo-valorant text-sm font-bold space-x-1">
+            <iconify-icon icon="ph:warning-diamond-fill"></iconify-icon>
+            <span>{{ error }}</span>
+        </div>
+    }
+</div>

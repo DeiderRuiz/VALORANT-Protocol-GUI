@@ -1,0 +1,24 @@
+<div class="flex flex-col space-y-5 fade-in">
+    <app-header titulo="MISIONES"></app-header>
+    @if (isLoading()) {
+        <app-loader></app-loader>
+    }@else{
+        <div class="flex flex-col space-y-5 fade-in">
+            <app-mission-search-bar 
+                [missionTypes]="missionTypes()" 
+                [searchParams]="searchParams()" 
+                (searchMission)="onSearchMission($event)"
+            ></app-mission-search-bar>
+            @if(missions().length === 0){
+                <div class="fade-in">
+                    <p>No hay misiones disponibles todavía</p>
+                </div>
+            }@else {
+                <app-mission-table [misiones]="missions()" misionURL="/misiones/"></app-mission-table>
+                @if (pagination().lastPage > 1) {
+                    <app-pagination [pagination]="pagination()" (changePage)="onChangePage($event)"></app-pagination>
+                }
+            }
+        </div>
+    }
+</div>

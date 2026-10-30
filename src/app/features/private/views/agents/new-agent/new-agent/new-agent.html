@@ -1,0 +1,82 @@
+<div class="fade-in">
+    <app-header titulo="NUEVO AGENTE"></app-header>
+    @if (isLoadingCountries() && isLoadingAgentDraft() && isLoadingClasses()) {
+        <app-loader></app-loader>
+    }@else {
+        <div class="fade-in">
+            @if ((agentDraft()?.length ?? 0) > 0) {
+                <div class="space-y-2 mb-4">
+                    <h3 class="font-bold text-xl">Hay agentes pendientes por completar</h3>
+                    @for (agent of agentDraft(); track agent.name) {
+                        <div class="grid grid-cols-4 gap-4">
+                            <app-agent-draft-card [agent]="agent" (agentDraft)="onEditAgentDraft($event)"></app-agent-draft-card>
+                        </div>
+                    }
+                    <hr class="mt-4">
+                </div>
+            }
+            <form [formGroup]="agentForm" (ngSubmit)="submitAgent(agentDraftSelected()!)" class="flex flex-col space-y-3">
+                <div>
+                    <h3 class="font-bold text-xl">Credenciales</h3>
+                    <div class="grid grid-cols-3 gap-6">
+                        <app-input-component [form]="agentForm" controlName="email"
+                            tipo="email" label="Correo electrónico" placeholder="*Email"
+                            [error]="getValidationError('email')"
+                        ></app-input-component>
+                        <app-input-component [form]="agentForm" controlName="password"
+                            tipo="password" label="Contraseña" placeholder="*Contraseña"
+                            [error]="getValidationError('password')"
+                        ></app-input-component>
+                        <app-input-component [form]="agentForm" controlName="password_confirmation"
+                            tipo="password" label="Confirmar contraseña" placeholder="*Confirmar contraseña"
+                            [error]="getValidationError('password_confirmation')"
+                        ></app-input-component>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl">Perfil del agente</h3>
+                    <div class="flex flex-col space-y-3">
+                        <div class="grid grid-cols-3 gap-6">
+                            <app-input-component [form]="agentForm" controlName="name"
+                                label="El nombre" placeholder="*Nombre" [error]="getValidationError('name')"
+                            ></app-input-component>
+                            <app-select-component [form]="agentForm" controlName="class" label="Rol de agente"
+                                [error]="getValidationError('class')"
+                            >
+                                @for (class of agentClasses(); track $index) {
+                                    <option [value]="class.id">{{ class.name }}</option>
+                                }
+                            </app-select-component>
+                            <app-select-component [form]="agentForm" controlName="country_code" label="Nacionalidad"
+                                [error]="getValidationError('country_code')"
+                            >
+                                @for (country of countries(); track country.code) {
+                                    <option 
+                                        [value]="country.code"
+                                    >{{ country.name_es }}</option>
+                                }
+                            </app-select-component>
+                        </div>
+                        <app-textarea-component [form]="agentForm" controlName="bio"
+                            label="Biografía" placeholder="*Biografía" [error]="getValidationError('bio')"
+                        ></app-textarea-component>
+                        <div class="grid grid-cols-2 gap-6">
+                            <app-input-image-component [form]="agentForm" controlName="profile_photo"
+                                [currentImage]="currentProfilePhoto()"
+                                label="Foto de perfil del agente" [error]="getValidationError('profile_photo')"
+                            ></app-input-image-component>
+                            <app-input-image-component [form]="agentForm" controlName="agent_photo"
+                                [currentImage]="currentAgentImage()"
+                                label="Foto del agente (Cuerpo completo)" [error]="getValidationError('agent_photo')"
+                            ></app-input-image-component>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full flex items-center justify-between">
+                    <app-secondary-button routerLink="/agentes" tipo="button" texto="Cancelar"></app-secondary-button>
+                    <app-primary-button tipo="submit" [isDisabled]="agentForm.invalid" texto="Siguiente"></app-primary-button>
+                </div>
+            </form>
+        </div>
+    }
+</div>

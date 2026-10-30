@@ -1,0 +1,15 @@
+<div class="fade-in [animation-duration:300ms] space-y-5">
+    <h1 class="text-center text-3xl font-bold font-orbitron">VALORANT</h1>
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="fade-in [animation-duration:300ms] w-96 flex flex-col space-y-3">
+        <app-input-component [form]="loginForm" controlName="email" 
+            placeholder="Correo Electrónico" label="Correo Electrónico"
+            [error]="getValidationError('email')"
+        ></app-input-component>
+        <app-input-component [form]="loginForm" controlName="password" 
+            tipo="password" placeholder="Contraseña" label="Contraseña"
+            [error]="getValidationError('password')"
+        ></app-input-component>
+        <app-primary-button texto="Iniciar Sesión" tipo="submit" [isDisabled]="loginForm.invalid"></app-primary-button>
+        <a routerLink="/forgot-password" class="block text-center text-azul-valorant font-bold transition transform hover:scale-110 ease-in-out duration-300 underline">¿Olvidaste Tu Contraseña?</a>
+    </form>
+</div>

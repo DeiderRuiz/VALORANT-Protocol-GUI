@@ -1,0 +1,46 @@
+<div class="fade-in">
+    <app-header titulo="Estadísticas"></app-header>
+    @if (isLoading()) {
+        <app-loader></app-loader>
+    }@else {
+        <div class="space-y-5 fade-in">
+            <div class="space-y-3">
+                <h3 class="text-xl font-bold">Estadisticas Generales</h3>
+                <div class=" grid grid-cols-3 gap-5 font-bold text-gris-valorant">
+                    <div class="p-4 space-y-1 bg-azul-valorant">
+                        <h3 class="font-orbitron text-xl">Misiones Creadas</h3>
+                        <p>{{ statistics()?.general?.missionsCreated }}</p>
+                    </div>
+                    <div class="p-4 space-y-1 bg-azul-valorant">
+                        <h3 class="font-orbitron text-xl">Misiones Abortadas</h3>
+                        <p>{{ statistics()?.general?.missionsAborted }}</p>
+                    </div>
+                    <div class="p-4 space-y-1 bg-azul-valorant">
+                        <h3 class="font-orbitron text-xl">Misiones Completadas</h3>
+                        <p>{{ statistics()?.general?.missionsCompleted }}</p>
+                    </div>
+                    <div class="p-4 space-y-1 bg-azul-valorant">
+                        <h3 class="font-orbitron text-xl">Victorias</h3>
+                        <p>{{ statistics()?.general?.victories }}</p>
+                    </div>
+                    <div class="p-4 space-y-1 bg-azul-valorant">
+                        <h3 class="font-orbitron text-xl">Derrotas</h3>
+                        <p>{{ statistics()?.general?.defeats }}</p>
+                    </div>
+                    <div class="p-4 space-y-1 bg-azul-valorant">
+                        <h3 class="font-orbitron text-xl">Tasa De Éxito</h3>
+                        <p>{{ statistics()?.general?.victoryRate }}%</p>
+                    </div>
+                </div>
+            </div>
+            <div class="space-y-1">
+                <h3 class="text-xl font-bold">Estadísticas En Mapas</h3>
+                <app-statistics-table item="Mapa" [statistics]="statistics()!.mapStatistics"></app-statistics-table>
+            </div>
+            <div class="space-y-1">
+                <h3 class="text-xl font-bold">Estadísticas Según Tipo de Misión</h3>
+                <app-statistics-table item="Mapa" [statistics]="statistics()!.missionTypeStatistics"></app-statistics-table>
+            </div>
+        </div>
+    }
+</div>

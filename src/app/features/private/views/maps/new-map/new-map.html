@@ -1,0 +1,20 @@
+<div class="fade-in">
+    <app-header titulo="NUEVO MAPA"></app-header>
+    <div class="flex items-center justify-center">
+        <form [formGroup]="mapForm" (ngSubmit)="newMap()" class="flex flex-col space-y-3 w-[600px]">
+            <app-input-component [form]="mapForm" controlName="name"
+                tipo="text" label="Nombre" placeholder="*Nombre del mapa" [error]="getvalidationError('name')"
+            ></app-input-component>
+            <app-textarea-component [form]="mapForm" controlName="description"
+                label="Descripción" placeholder="*Descripción" [error]="getvalidationError('description')"
+            ></app-textarea-component>
+            <app-input-image-component [form]="mapForm" controlName="photo"
+                label="Foto del mapa" [error]="getvalidationError('photo')"
+            ></app-input-image-component>
+            <div class="w-full flex items-center justify-between">
+                <app-secondary-button routerLink="/mapas" tipo="button" texto="Cancelar"></app-secondary-button>
+                <app-primary-button tipo="submit" [isDisabled]="mapForm.invalid" texto="Crear Mapa"></app-primary-button>
+            </div>
+        </form>
+    </div>
+</div>

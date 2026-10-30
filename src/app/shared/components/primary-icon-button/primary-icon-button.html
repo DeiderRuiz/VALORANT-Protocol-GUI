@@ -1,0 +1,18 @@
+<button 
+    [type]="tipo" 
+    [disabled]="isDisabled"
+    class="group block p-0.5 w-full whitespace-nowrap text-azul-valorant font-bold border-2 border-azul-valorant transition transform ease-in-out duration-200"
+    [ngClass]="{
+        'opacity-60 grayscale cursor-not-allowed': isDisabled,
+        'active:ring-2 active:ring-azul-valorant cursor-pointer': !isDisabled
+    }"
+>
+    <div 
+        class="block flex items-center justify-center p-1 bg-transparent transition duration-300"
+        [ngClass]="{
+            'group-hover:bg-azul-valorant group-hover:text-gris-valorant': !isDisabled
+        }"
+    >
+        <iconify-icon [icon]="icono" class="text-xl"></iconify-icon>
+    </div>
+</button>

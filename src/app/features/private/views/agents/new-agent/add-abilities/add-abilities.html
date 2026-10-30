@@ -1,0 +1,23 @@
+<div class="fade-in">
+    <app-header titulo="AGREGAR HABILIDADES"></app-header>
+    <form [formGroup]="abilitiesForm" (ngSubmit)="sumbmitNewAgent()" class="space-y-5">
+        <div class="grid grid-cols-2 gap-6">
+            <app-ability-form-card titulo="Q" [form]="getAbility(0)" 
+                [errors]="validationErrors()" [index]="0"
+            ></app-ability-form-card>
+            <app-ability-form-card titulo="E" [form]="getAbility(1)" 
+                [errors]="validationErrors()" [index]="1"
+            ></app-ability-form-card>
+            <app-ability-form-card titulo="C" [form]="getAbility(2)" 
+                [errors]="validationErrors()" [index]="2"
+            ></app-ability-form-card>
+            <app-ability-form-card titulo="X" [form]="getAbility(3)" 
+                [errors]="validationErrors()" [index]="3"
+            ></app-ability-form-card>
+        </div>
+        <div class="w-full flex items-center justify-between">
+            <app-secondary-button routerLink="/agentes/nuevo-agente" [queryParams]="{ agent: slug() }" tipo="button" texto="Atras"></app-secondary-button>
+            <app-primary-button tipo="submit" [isDisabled]="abilitiesForm.invalid" texto="Siguiente"></app-primary-button>
+        </div>
+    </form>
+</div>

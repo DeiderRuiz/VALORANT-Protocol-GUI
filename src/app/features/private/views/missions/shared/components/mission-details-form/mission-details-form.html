@@ -1,0 +1,47 @@
+<form [formGroup]="missionForm" (ngSubmit)="setMission()" class="flex flex-col space-y-3">
+    <app-input-component [form]="missionForm" controlName="title"
+        tipo="text" label="Titulo" placeholder="*Titulo" [error]="getBackendError('title')"
+    ></app-input-component>
+    <app-textarea-component [form]="missionForm" controlName="description"
+        label="Descripción" placeholder="*Descripción" [error]="getBackendError('description')"
+    ></app-textarea-component>
+    <app-input-component [form]="missionForm" controlName="objective"
+        tipo="text" label="Objetivo" placeholder="*Objetivo" [error]="getBackendError('objective')"
+    ></app-input-component>
+    <div class="grid grid-cols-3 gap-3">
+        <app-input-datetime-component [form]="missionForm" controlName="deadline"
+            label="Fecha límite" [error]="getBackendError('deadline')"
+        ></app-input-datetime-component>
+        <app-select-component [form]="missionForm" controlName="type_id" label="Tipo de Misión"
+            [error]="getBackendError('type_id')"
+        >
+            @for (tipo of missionTypes; track tipo.id) {
+                <option [value]="tipo.id">{{ tipo.name }}</option>
+            }
+        </app-select-component>
+        <app-select-component [form]="missionForm" controlName="priority" label="Nivel de Prioridad"
+            [error]="getBackendError('priority')"
+        >
+            <option value="baja">Baja</option>
+            <option value="media">Media</option>
+            <option value="alta">Alta</option>
+            <option value="critica">Critica</option>
+        </app-select-component>
+    </div>
+    <h6 class="font-bold">Seleccionar Mapa</h6>
+    @if (missionForm.get('map_id')?.touched && missionForm.get('map_id')?.invalid) {
+        <div class="flex items-center justify-start text-rojo-valorant text-sm font-bold space-x-1">
+            <iconify-icon icon="mynaui:danger-diamond-solid"></iconify-icon>
+            <span>Selecciona un mapa para continuar</span>
+        </div>
+    }
+    <div class="grid grid-cols-5 gap-3">
+        @for (mapa of maps; track mapa) {
+            <app-map-selector-button [mapa]="mapa" (click)="seleccionarMapa(mapa)" [isSelected]="isSelected(mapa.name)"></app-map-selector-button>
+        }
+    </div>
+    <div class="w-full flex items-center justify-between">
+        <app-secondary-button (click)="onCancel()" tipo="button" texto="Cancelar"></app-secondary-button>
+        <app-primary-button tipo="submit" [isDisabled]="missionForm.invalid" texto="Siguiente"></app-primary-button>
+    </div>
+</form>

@@ -1,0 +1,30 @@
+<div class="grid grid-cols-3 gap-4">
+    <div class="col-span-1 w-full">
+        <img [src]="storageUrl + agent?.agent_photo" [alt]="agent?.name" class="h-[600px] w-auto object-cover">
+    </div>
+    <div class="col-span-2 space-y-5">
+        <div class="flex items-center justify-start space-x-4">
+            @if (isAdminOrAssistant() || isCurrentAgent()) {
+                <app-primary-button [routerLink]="statsRoute + agent?.slug + '/estadisticas'" texto="Ver estadisticas"></app-primary-button>
+            }
+            @if (isAdmin()) {
+                <app-primary-button [routerLink]="'/agentes/' + agent?.slug + '/editar-perfil'" texto="Editar perfil"></app-primary-button>
+            }
+        </div>
+        <div class="w-2/3">
+            <h6 class="font-bold text-lg">Biografía</h6>
+            <p>{{ agent?.bio }}</p>
+        </div>
+        @for (habilidad of agent?.abilities; track habilidad) {
+            <div class="w-full flex items-stretch border-2 border-azul-valorant">
+                <div class="flex items-center justify-center bg-azul-valorant shrink-0 p-3">
+                    <img [src]="storageUrl + habilidad.icon" [alt]="habilidad.name" class="h-20 w-20">
+                </div>
+                <div class="w-full p-3">
+                    <h6 class="font-bold text-lg">{{ habilidad.name }}</h6>
+                    <p>{{ habilidad.description }}</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>

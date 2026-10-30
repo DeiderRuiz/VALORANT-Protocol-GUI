@@ -1,0 +1,20 @@
+<form [formGroup]="resolveMissionForm" (ngSubmit)="resolveMission(mision!)" class="flex flex-col space-y-2">
+    <h6 class="font-bold text-lg">Resultado de la misión</h6>
+    <p>Selecciona el resultado de la misión</p>
+    <div class="flex items-center justify-start space-x-3">
+        <app-primary-button (click)="setResultMission('success')" [isActive]="selectedResult() === 'success'" texto="Éxitosa">
+            <iconify-icon icono class="text-lg mr-1" icon="material-symbols:check-circle-outline"></iconify-icon>
+        </app-primary-button>
+        <app-secondary-button (click)="setResultMission('failed')" [isActive]="selectedResult() === 'failed'" texto="Fallida">
+            <iconify-icon icono class="text-lg mr-1" icon="material-symbols:cancel-outline"></iconify-icon>
+        </app-secondary-button>
+    </div>
+    @if (selectedResult() === "success" || selectedResult() === "failed") {
+        <app-textarea-component [form]="resolveMissionForm" controlName="description"
+            label="Descripción" placeholder="Describe cualquier detalle relevante sobre el resultado de la misión (opcional)" [error]="getBackendError('description')"
+        ></app-textarea-component>
+        <div class="w-full flex items-center justify-end">
+            <app-primary-button tipo="submit" [isDisabled]="resolveMissionForm.invalid" texto="Completar Misión"></app-primary-button>
+        </div>
+    }
+</form>

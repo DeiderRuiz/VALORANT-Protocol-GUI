@@ -1,0 +1,93 @@
+<div class="space-y-4 fade-in">
+    @if (dashboardData(); as data) {
+        <div class="space-y-2 fade-in">
+            <h3 class="font-bold text-lg">Resumen Personal</h3>
+            <div class="grid grid-cols-2 gap-6">
+                <app-dashboard-card titulo="Mis Misiones" ruta="/mis-misiones">
+                    <div body class="flex items-center justify-start space-x-5">
+                        <img src="Misiones.png" alt="Misiones" class="w-32 h-auto">
+                        @if (data.myLastMission) {
+                        <div class="text-left grid-cols-2">
+                            <p>Ultima Misión: {{ data.myLastMission.title }}</p>
+                            <p>Creada en: {{ data.myLastMission.created_at | date:'MMM d, y, h:mm a' }}</p>
+                            <p>Completada en: {{ data.myLastMission.updated_at | date:'MMM d, y, h:mm a' }}</p>
+                            @if (data.myLastMission.result) {
+                                <p>Estado: {{ data.myLastMission.result | statusLabel }}</p>
+                            }@else {
+                                <p>Estado: {{ data.myLastMission.statement | statusLabel }}</p>
+                            }
+                        </div>
+                        } @else { 
+                            <p>No has sido asignado a una misión todavía.</p>
+                        }
+                    </div>
+                </app-dashboard-card>
+                <app-dashboard-card titulo="Perfil" [ruta]="'/perfil/' + slug">
+                    <div body class="flex items-center justify-start space-x-5">
+                        <img [src]="storageUrl + data.profile.profile_photo" [alt]="data.profile.name" class="w-32 h-auto">
+                        <div class="text-left h-full space-y-2">
+                            <p>Agente: {{ data.profile.name }}</p>
+                            <p>Rol: {{ data.profile.class }}</p>
+                            <p>Misiones completadas: {{ data.myStatistics.missionsCompleted }}</p>
+                            <p>Tasa de Éxito: {{ data.myStatistics.victoryRate }}%</p>
+                        </div>
+                    </div>
+                </app-dashboard-card>
+            </div>
+        </div>
+        <div class="space-y-2">
+            <h3 class="font-bold text-lg">Información general</h3>
+            <div class="grid grid-cols-2 gap-6">
+                @if (isAdminOrAssistant()) {
+                    <app-dashboard-card titulo="Misiones (General)" ruta="/misiones">
+                        <div body class="flex items-center justify-start space-x-5">
+                            <iconify-icon icon="simple-icons:valorant" class="text-[8rem]"></iconify-icon>
+                            @if (data.lastMission) {
+                            <div class="text-left grid-cols-2">
+                                <p>Ultima Misión: {{ data.lastMission.title }}</p>
+                                <p>Creada en: {{ data.lastMission.created_at | date:'MMM d, y, h:mm a' }}</p>
+                                <p>Completada en: {{ data.lastMission.updated_at | date:'MMM d, y, h:mm a' }}</p>
+                                @if (data.lastMission.result) {
+                                    <p>Estado: {{ data.lastMission.result | statusLabel }}</p>
+                                }@else {
+                                    <p>Estado: {{ data.lastMission.statement | statusLabel }}</p>
+                                }
+                            </div>
+                            } @else { 
+                                <p>No hay misiones disponibles todavía.</p>
+                            }
+                        </div>
+                    </app-dashboard-card>
+                    <app-dashboard-card titulo="Estadisticas" ruta="/estadisticas">
+                        <div body class="flex items-center justify-start space-x-5">
+                            <iconify-icon icon="lucide:chart-no-axes-column" class="text-[8rem]"></iconify-icon>
+                            <div class="text-left grid-cols-2">
+                                <p>Misiones Completadas: {{ data.generalStatistics.missionsCompleted }}</p>
+                                <p>Victorias: {{ data.generalStatistics.victories }}</p>
+                                <p>Derrotas: {{ data.generalStatistics.defeats }}</p>
+                                <p>Tasa de Éxito: {{ data.generalStatistics.victoryRate }}%</p>
+                            </div>
+                        </div>
+                    </app-dashboard-card>
+                }
+                <app-dashboard-card titulo="Mapas" ruta="/mapas">
+                    <img body src="Maps.png" alt="Misiones" class="w-full h-32 object-cover">
+                    <div footer class="w-full text-left">
+                        <p>{{ data.maps }} Mapas en total</p>
+                    </div>
+                </app-dashboard-card>
+                <app-dashboard-card titulo="Agentes" ruta="/agentes">
+                    <img body src="Agents.png" alt="Misiones" class="w-full h-32 object-cover">
+                    <div footer class="w-full text-left">
+                        <p>{{ data.agents }} Agentes en total</p>
+                    </div>
+                </app-dashboard-card>
+            </div>
+        </div>
+    }@else {
+        <app-loader></app-loader>
+    }
+    @if (error()) {
+        <p>{{ error() }}</p>
+    }
+</div>

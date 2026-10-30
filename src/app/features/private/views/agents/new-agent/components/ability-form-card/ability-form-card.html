@@ -1,0 +1,14 @@
+<div class="flex flex-col space-y-3 w-full border-2 border-azul-valorant p-3">
+    <h3 class="font-bold text-lg">Habilidad {{ titulo }}</h3>
+    <app-input-component [form]="form" controlName="name"
+        tipo="text" label="Nombre" placeholder="Nombre de habilidad" 
+        [error]="getValidationError('name')"
+    ></app-input-component>
+    <app-textarea-component [form]="form" controlName="description"
+        label="Descripción" placeholder="Descripción" 
+        [error]="getValidationError('description')"
+    ></app-textarea-component>
+    <app-input-image-component [form]="form" controlName="icon"
+        label="Icono de la habilidad" [error]="getValidationError('icon')"
+    ></app-input-image-component>
+</div>

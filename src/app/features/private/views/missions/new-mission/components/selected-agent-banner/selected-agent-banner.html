@@ -1,0 +1,31 @@
+<div class="flex items-center justify-start space-x-1 bg-azul-valorant w-full h-15 p-1">
+    <div class="block flex items-center justify-center text-gris-valorant whitespace-nowrap">
+        <div class="flex items-center justify-between h-13 w-13">
+            @if (agente === null) {
+                <div class="w-full h-full flex items-center justify-center">
+                    <iconify-icon icon="icons8:spy" class="text-gris-valorant text-5xl"></iconify-icon>
+                </div>
+            }@else {
+                <img [src]="storageUrl + agente.profile_photo" alt="" class="h-full w-full object-cover">
+            }
+        </div>
+    </div>
+    <div class="h-full border border-gris-valorant"></div>
+    <div class="w-full p-1 flex items-center justify-between text-gris-valorant h-13">
+        <div>
+            @if (agente === null) {                
+                <p class="font-bold font-orbitron">Agente {{ index }}</p>
+                <small>Sin Seleccionar</small>
+            }@else {
+                <p class="font-bold font-orbitron">{{ agente.name }}</p>
+                <small>{{ agente.class.name }}</small>
+            }
+        </div>
+        @if (agente !== null) {
+            <div class="flex items-center justify-center space-x-2">
+                <app-tertiary-icon-button (click)="elegirLider(agente)" [isSelected]="isLeader"></app-tertiary-icon-button>
+                <app-secondary-icon-button (click)="onRemoveAgent(agente)" icono="fa6-solid:xmark"></app-secondary-icon-button>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<nav>
+    <ul class="flex -space-x-px text-sm">
+        <li>
+            <app-primary-button (click)="onChangePage(1)" [isDisabled]="pagination().currentPage === 1">
+                <iconify-icon icono icon="material-symbols:keyboard-double-arrow-left-rounded" class="text-xl"></iconify-icon>
+            </app-primary-button>
+        </li>
+        <li>
+            <app-primary-button (click)="onChangePage(pagination().currentPage - 1)" [isDisabled]="pagination().currentPage === 1">
+                <iconify-icon icono icon="material-symbols:keyboard-arrow-left-rounded" class="text-xl"></iconify-icon>
+            </app-primary-button>
+        </li>
+        @for (page of pages(); track page) {
+            <li>
+                @if (page === 0) {
+                    <div class="block w-full whitespace-nowrap text-azul-valorant font-bold border-2 border-azul-valorant block flex items-center justify-center py-1.5 px-5">
+                        <span>...</span>
+                    </div>
+                }@else {
+                    <app-primary-button (click)="onChangePage(page)" [texto]="page.toString()" [isActive]="pagination().currentPage === page"></app-primary-button>
+                }
+            </li>
+        }
+        <li>
+            <app-primary-button (click)="onChangePage(pagination().currentPage + 1)" [isDisabled]="pagination().currentPage === pagination().lastPage">
+                <iconify-icon icono icon="material-symbols:keyboard-arrow-right-rounded" class="text-xl"></iconify-icon>
+            </app-primary-button>
+        </li>
+        <li>
+            <app-primary-button (click)="onChangePage(pagination().lastPage)" [isDisabled]="pagination().currentPage === pagination().lastPage">
+                <iconify-icon icono icon="material-symbols:keyboard-double-arrow-right-rounded" class="text-xl"></iconify-icon>
+            </app-primary-button>
+        </li>
+    </ul>
+</nav>

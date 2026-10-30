@@ -1,0 +1,36 @@
+<table class="w-full border-2 border-azul-valorant border-separate border-spacing-0 text-left">
+    <thead class="bg-azul-valorant text-gris-valorant text-lg">
+        <tr>
+            <th scope="col" class="px-6 py-3">{{ item }}</th>
+            <th scope="col" class="text-center px-6 py-3">Misiones Abortadas</th>
+            <th scope="col" class="text-center px-6 py-3">Misiones Completadas</th>
+            <th scope="col" class="text-center px-6 py-3">Victorias</th>
+            <th scope="col" class="text-center px-6 py-3">Derrotas</th>
+            <th scope="col" class="text-center px-6 py-3">Tasa De Éxito</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for(stat of statistics; track stat.itemName) {
+            <tr class="capitalize font-bold">
+                <td class="border-t-2 border-azul-valorant px-6 py-3">
+                    {{ stat.itemName }}
+                </td>
+                <td class="text-center border-t-2 border-azul-valorant px-6 py-3">
+                    {{ stat.missionsAborted }}
+                </td>
+                <td class="text-center border-t-2 border-azul-valorant px-6 py-3">
+                    {{ stat.missionsCompleted }}
+                </td>
+                <td class="text-center border-t-2 border-azul-valorant px-6 py-3">
+                    {{ stat.victories }}
+                </td>
+                <td class="text-center border-t-2 border-azul-valorant px-6 py-3">
+                    {{ stat.defeats }}
+                </td>
+                <td class="text-center border-t-2 border-azul-valorant px-6 py-3">
+                    {{ stat.victoryRate }}%
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

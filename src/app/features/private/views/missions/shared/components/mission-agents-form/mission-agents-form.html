@@ -1,0 +1,107 @@
+<form [formGroup]="selectAgentsForm" (ngSubmit)="setMissionAgents()" class="mt-4 space-y-5">
+    <div class="flex items-start justify-between space-x-4 w-full h-84">
+        <aside class="col-span-3 w-1/5 p-1 h-full overflow-auto">
+            <div class="flex flex-wrap items-center justify-start gap-2">
+                @for (agente of agents; track agente) {
+                    <app-agent-selector-button
+                        (seleccionar)="agentePreseleccionado.set(agente)" 
+                        [isSelected]="isSelected(agente.agent.id)" 
+                        [isSpaceAvailable]="isSpaceAvailable()" 
+                        [isAgentAvailable]="agente.agent.available === 1"
+                        [isAssigned]="isSelectable(agente.agent)"
+                        [urlImage]="storageUrl + agente.agent.profile_photo" 
+                        [agentName]="agente.agent.name"
+                    ></app-agent-selector-button>
+                }
+            </div>
+        </aside>
+        <div class="flex-1 h-full p-1">
+            <div class="block w-full h-full flex items-center justify-center p-1 border-2 border-azul-valorant">
+                @if (agentePreseleccionado() !== null) {
+                    <div class="p-2 grid grid-cols-7 gap-4 w-full h-full">
+                        <div class="col-span-3">
+                            <img [src]="storageUrl + agentePreseleccionado()?.agent?.agent_photo" alt="" class="h-full w-auto object-cover">
+                        </div>
+                        <div class="col-span-4 flex flex-col h-full">
+                            <div class="space-y-1">
+                                <div>
+                                    <h3 class="text-xl font-bold font-orbitron">{{ agentePreseleccionado()?.agent?.name }}</h3>
+                                    <p class="font-bold">{{ agentePreseleccionado()?.agent?.class?.name }}</p>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold font-orbitron">Misiones en {{ agentePreseleccionado()?.mapName }}</h3>
+                                    <p class="text-sm"><span class="font-bold">Misiones Completadas: </span>{{ agentePreseleccionado()?.mapMissionsCompleted }}</p>
+                                    <p class="text-sm"><span class="font-bold">Victiorias: </span>{{ agentePreseleccionado()?.mapVictories }}</p>
+                                    <p class="text-sm"><span class="font-bold">Tasa de Éxito: </span>{{ agentePreseleccionado()?.mapVictoryAverage }}%</p>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold font-orbitron">Misiones de {{ agentePreseleccionado()?.missionTypeName }}</h3>
+                                    <p class="text-sm"><span class="font-bold">Misiones Completadas: </span>{{ agentePreseleccionado()?.missionTypesCompleted }}</p>
+                                    <p class="text-sm"><span class="font-bold">Victiorias: </span>{{ agentePreseleccionado()?.missionTypesVictories }}</p>
+                                    <p class="text-sm"><span class="font-bold">Tasa de Éxito: </span>{{ agentePreseleccionado()?.missionTypesVictoryAverage }}%</p>
+                                </div>
+                            </div>
+                            <div class="w-full mt-auto">
+                                <app-primary-button (click)="seleccionarAgente(agentePreseleccionado()!.agent)" texto="Seleccionar" tipo="button"></app-primary-button>
+                            </div>
+                        </div>
+                    </div>
+                }@else {
+                    <div class="space-y-6">
+                        <div class="text-center text-azul-valorant space-y-4">
+                            <iconify-icon class="text-6xl" icon="simple-icons:valorant"></iconify-icon>
+                            <div class="space-y-1">
+                                <p class="font-medium">Elije <span class="font-extrabold text-rojo-valorant">5 agentes</span> para asignarlos a esta misión.</p>
+                                <div class="flex items-center justify-center text-rojo-valorant space-x-4">
+                                    <hr class="border-2 border-rojo-valorant rounded-full w-1/4"><iconify-icon class="text-xl" icon="ph:diamonds-four-fill"></iconify-icon><hr class="border-2 border-rojo-valorant rounded-full w-1/4">
+                                </div>
+                                <p class="font-medium">Designa <span class="font-extrabold text-rojo-valorant">un agente</span> como <span class="font-extrabold text-rojo-valorant">líder</span>.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-center space-x-6 px-6">
+                            <div class="flex items-center justify-center space-x-1">
+                                <div class="border border-azul-valorant p-0.5 flex-items-center justify-center">
+                                    <div class="flex items-center justify-center bg-azul-valorant w-10 h-10 p-1">
+                                        <svg 
+                                            xmlns="http://www.w3.org/2000/svg" 
+                                            xml:space="preserve" width="19" height="20" 
+                                            viewBox="-0.5059643071566597 -0.4752806957926623 351.0319286143133 379.5305613915853"
+                                            class="w-7 h-7 text-gris-valorant"
+                                        >
+                                            <path fill="currentColor" d="M91.39 69.79a4.59 4.59 0 0 1-1-2.88V1.08A1.08 1.08 0 0 1 92.3.41l109.51 136.88a1.09 1.09 0 0 1-.85 1.76H149a4.59 4.59 0 0 1-3.6-1.74ZM186.65 92h51.95a4.58 4.58 0 0 0 3.6-1.73l16.41-20.51a4.59 4.59 0 0 0 1-2.88V1.08a1.08 1.08 0 0 0-1.91-.67l-71.9 89.87a1.08 1.08 0 0 0 .85 1.72Zm-69.12 115v-35.38a4.57 4.57 0 0 0-1-2.88l-59.88-75A4.63 4.63 0 0 0 53 92H1.08a1.08 1.08 0 0 0-.84 1.76l75 93.71a2.86 2.86 0 0 1 0 3.56l-75 93.72a1.08 1.08 0 0 0 .84 1.75H53a4.65 4.65 0 0 0 3.61-1.73l59.88-75a4.57 4.57 0 0 0 1.04-2.77Zm157.26-15.91a2.86 2.86 0 0 1 0-3.56l75-93.71a1.08 1.08 0 0 0-.84-1.76H297a4.63 4.63 0 0 0-3.61 1.74l-59.88 74.94a4.57 4.57 0 0 0-1 2.88v35.35a4.55 4.55 0 0 0 1 2.88l59.88 75a4.65 4.65 0 0 0 3.61 1.73h51.95a1.08 1.08 0 0 0 .84-1.75Zm-16.18 117.68-54-67.52a4.58 4.58 0 0 0-3.6-1.73h-51.8a5 5 0 0 0-3.89 1.86l-53.93 67.39a4.6 4.6 0 0 0-1 2.89v65.82a1.08 1.08 0 0 0 1.92.67L173.18 277a2.31 2.31 0 0 1 3.61 0l80.91 101.15a1.08 1.08 0 0 0 1.92-.67v-65.82a4.6 4.6 0 0 0-1.01-2.89Z" style="stroke:none;stroke-width:1;stroke-dasharray:none;stroke-linecap:butt;stroke-dashoffset:0;stroke-linejoin:miter;stroke-miterlimit:4;fill-rule:nonzero;opacity:1" vector-effect="non-scaling-stroke"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <p class="text-xs">Asigna un agente como lider de misión</p>
+                            </div>
+                            <div class="flex items-center justify-center space-x-1">
+                                <div class="border border-azul-valorant p-0.5 flex-items-center justify-center">
+                                    <div class="flex items-center justify-center bg-azul-valorant w-10 h-10 p-1">
+                                        <iconify-icon class="text-3xl text-rojo-valorant" icon="fa6-solid:xmark"></iconify-icon>
+                                    </div>
+                                </div>
+                                <p class="text-xs">Quita una gente de la lista de seleccionados</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="w-1/3 space-y-2 p-1">
+            @for (agente of agentesSeleccionados(); track $index;) {
+                <app-selected-agent-banner
+                    [agente]="agente" 
+                    [isLeader]="isLeader(agente)"
+                    (lider)="seleccionarLeader($event)" 
+                    (removeAgent)="removerAgente($event)" 
+                    [index]="$index + 1"
+                    class="block"
+                ></app-selected-agent-banner>
+            }
+        </div>
+    </div>
+    <div class="w-full flex items-center justify-between">
+        <app-secondary-button [routerLink]="cancelURL" tipo="button" [texto]="cancelText"></app-secondary-button>
+        <app-primary-button [isDisabled]="selectAgentsForm.invalid" tipo="submit" [texto]="submitText"></app-primary-button>
+    </div>
+</form>

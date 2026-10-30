@@ -1,0 +1,13 @@
+<div class="fade-in">
+    <app-header titulo="SELECCIONAR AGENTES"></app-header>
+    @if (agentes()) {
+        <div class="fade-in">
+            <app-mission-agents-form
+                [agents]="agentes()!"
+                (setAgentsMission)="setMissionAgents($event)"
+            ></app-mission-agents-form>
+        </div>
+    }@else {
+        <app-loader></app-loader>
+    }
+</div>

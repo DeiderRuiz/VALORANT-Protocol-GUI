@@ -1,0 +1,47 @@
+<header class="bg-azul-valorant text-gris-valorant px-6 py-4 space-y-1 mb-3">
+    <div class="flex items-center justify-start text-xs">
+        <a href="#" routerLink="/dashboard" class="hover:text-rojo-valorant hover:underline transition transform ease-in-out duration-300">Home</a>
+        <iconify-icon icon="mingcute:right-fill"></iconify-icon>
+        @for (breadcrumb of breadcrumbs(); track $index; let last = $last) {
+            @if (!last) {
+                <a [routerLink]="breadcrumb.url" class="capitalize hover:text-rojo-valorant hover:underline transition transform ease-in-out duration-300">
+                    {{ breadcrumb.label }}
+                </a>
+                <iconify-icon icon="mingcute:right-fill"></iconify-icon>
+
+            } @else {
+                <p class="capitalize font-bold">
+                    {{ breadcrumb.label }}
+                </p>
+            }
+        }
+    </div>
+    @if(agente){
+        <div class="flex items-center justify-start space-x-8">
+            <div class="flex items-center justify-start space-x-1">
+                <img [src]="storageUrl + agente.profile_photo" [alt]="agente.name" class="h-12 w-auto">
+                <h3 class="text-2xl font-bold font-orbitron uppercase">{{ agente.name }}</h3>
+            </div>
+            <div class="flex items-center justify-start space-x-1">
+                <img [src]="storageUrl + agente.class.icon" [alt]="agente.class.name" class="h-6 w-auto">
+                <h6 class="font-bold">{{ agente.class.name }}</h6>
+            </div>
+            <div class="flex items-center justify-start space-x-1">
+                @if (agente.nationality) {
+                    <img 
+                        [src]="'https://flagcdn.com/w80/' + agente.nationality.country_code.toLowerCase() + '.png'" 
+                        [srcset]="'https://flagcdn.com/w160/' + agente.nationality.country_code.toLowerCase() + '.png 2x'" 
+                        width="80" [alt]="agente.nationality.country_name.toLowerCase()" 
+                        class="h-6 w-auto object-cover"
+                    >
+                    <h6 class="font-bold">{{ agente.nationality.country_name }}</h6>
+                } @else {
+                    <img src="unknown_flag_sm.png" alt="Descnonocido" class="h-6 w-auto">
+                    <h6 class="font-bold">Descnonocido</h6>
+                }
+            </div>
+        </div>
+    }@else {
+        <h3 class="text-2xl font-bold font-orbitron uppercase">{{ titulo }}</h3>
+    }
+</header>

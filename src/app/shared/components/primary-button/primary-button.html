@@ -1,0 +1,21 @@
+<button 
+    [type]="tipo" 
+    [disabled]="isDisabled"
+    class="group block p-0.5 w-full whitespace-nowrap text-azul-valorant font-bold border-2 border-azul-valorant transition transform ease-in-out duration-200"
+    [ngClass]="{
+        'opacity-60 grayscale cursor-not-allowed': isDisabled,
+        'active:ring-2 active:ring-azul-valorant cursor-pointer': !isDisabled && !isActive,
+        'ring-2 ring-azul-valorant': isActive
+    }"
+>
+    <div 
+        class="block flex items-center justify-center py-1 px-5 transition duration-300"
+        [ngClass]="{
+            'bg-transparent group-hover:bg-azul-valorant group-hover:text-gris-valorant': !isDisabled && !isActive,
+            'bg-azul-valorant text-gris-valorant': isActive
+        }"
+    >
+        <ng-content select="[icono]"></ng-content>
+        <span>{{ texto }}</span>
+    </div>
+</button>
